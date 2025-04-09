@@ -6,181 +6,184 @@
     --background: #fff5f5;
     --hover: #ffffff;
     --primary: #ee9a8b;
-    --secondary: #e68f7f;
     --accent: #ec6851;
 }
 
 :root[data-theme="dark"] {
-    --text: #fff5f5;
-    --background: #170e0c;
-    --hover: #ffffff;
-    --primary: #ee9a8b;
-    --secondary: #e68f7f;
-    --accent: #ec6851;
+    --text: #eaeaea;
+    --text2: #a8a8a8;
+    --background: #121212;
+    --hover: #1e1e1e;
+    --primary: #ec6851;
+    --accent: #f3836f;
 }
 
 body {
-  font-family: 'Baloo 2';
-  font-weight: 400;
-  width: 100%;
-  background: var(--background);
-  color: var(--text);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    font-family: 'Baloo 2';
+    font-weight: 400;
+    width: 100%;
+    background: var(--background);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-html {font-size: 100%;} 
+html { font-size: 100%; } 
 
 h1 {
-  font-size: 3.510rem;
-  padding: 75px 0 50px;
-  color: var(--accent);
-  justify-content: center;
-  display: flex;
-  text-transform: uppercase; 
+    font-size: 3.510rem;
+    padding: 75px 0 50px;
+    color: var(--accent);
+    justify-content: center;
+    display: flex;
+    text-transform: uppercase; 
 }
 
 ul {
-  list-style: none;
+    list-style: none;
 }
 
-#theme{
-  background: none;
-  border: none;
-  right: 10px;
-  top: 10px;
-  position: absolute;
+#theme {
+    background: none;
+    border: none;
+    right: 10px;
+    top: 10px;
+    position: absolute;
 }
 
 #theme svg {
-  fill: var(--accent);
+    fill: var(--accent);
 }
 
 #theme:hover {
-  cursor: pointer;
-  transform: scale(105%);
+    cursor: pointer;
+    transform: scale(105%);
 }
 
 #content {
-  display: flex;
-  width: 600px;
-  max-width: 100%;
-  flex-direction: column;
+    display: flex;
+    width: 600px;
+    max-width: 100%;
+    flex-direction: column;
 }
 
 #content.with-tasks {
-  border-radius: 20px;
-  background-color: var(--hover);
+    border-radius: 20px;
+    background-color: var(--hover);
 }
 
 form {
-  position: relative;
+    position: relative;
 }
 
 #newTask {
-  box-sizing: border-box;
-  border-radius: 20px;
-  border: solid 2px var(--primary);
-  width: 100%;
-  padding: 10px;
+    background-color: var(--hover);
+    color: var(--text);
+    box-sizing: border-box;
+    border-radius: 20px;
+    border: solid 2px var(--primary);
+    width: 100%;
+    padding: 10px;
 }
 
 #newTask:hover, #newTask:focus {
-  border: 2px solid var(--accent);
-  outline: none;
-  transition: 300ms ease;
+    border: 2px solid var(--accent);
+    outline: none;
+    transition: 300ms ease;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--background) inset;
+    -webkit-text-fill-color: var(--text);
+}
+
+input:-webkit-autofill::placeholder {
+    color: var(--text2);
 }
 
 #addTask {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 20px;
-  height: 100%;
-  width: 60px;
-  border: 2px solid var(--primary);
-  background: var(--primary);
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 20px;
+    height: 100%;
+    width: 60px;
+    border: 2px solid var(--primary);
+    background: var(--primary);
 }
 
 #addTask:hover, #addTask:focus {
-  cursor: pointer;
-  border: 2px solid var(--accent);
-  background: var(--accent);
-  outline: none;
-  transition: 300ms ease;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px var(--hover) inset;
+    cursor: pointer;
+    border: 2px solid var(--accent);
+    background: var(--accent);
+    outline: none;
+    transition: 300ms ease;
 }
 
 .task {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: var(--text);
 }
 
 .task .task-text:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .task .task-text {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 .checking-button {
-  border: 2px solid var(--primary);
-  border-radius: 50%;
-  min-height: 20px;
-  min-width: 20px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  transition: 300ms ease;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    min-height: 20px;
+    min-width: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    transition: 300ms ease;
 }
 
-.checking-button svg{
-  fill: transparent;
+.checking-button svg {
+    fill: transparent;
 }
 
 input[type="checkbox"] {
-  display: none;
+    display: none;
 }
 
-input[type="checkbox"]:checked ~ .checking-button{
-  background-color: var(--primary);
+input[type="checkbox"]:checked ~ .checking-button {
+    background-color: var(--primary);
 }
 
-input[type="checkbox"]:checked ~ .checking-button svg{
-  fill: var(--hover);
+input[type="checkbox"]:checked ~ .checking-button svg {
+    fill: var(--hover);
 }
 
-input[type="checkbox"]:checked ~ .task-text{
-  text-decoration: line-through;
-  color: var(--text2);
+input[type="checkbox"]:checked ~ .task-text {
+    text-decoration: line-through;
+    color: var(--text2);
 }
 
 .deleteTask {
-  background: none;
-  border: none;
-  right: 10px;
-  top: 10px;
+    background: none;
+    border: none;
+    right: 10px;
+    top: 10px;
 }
 
 .deleteTask svg {
-  fill: var(--text2);
+    fill: var(--text2);
 }
 
 .deleteTask:hover svg {
-  cursor: pointer;
-  fill: var(--text);
-  transform: scale(105%);
+    cursor: pointer;
+    fill: var(--text);
+    transform: scale(105%);
 }
