@@ -174,19 +174,37 @@ input[type="checkbox"]:checked ~ .task-text {
     color: var(--text2);
 }
 
-.deleteTask {
+.deleteTask, .drag-handle {
     background: none;
     border: none;
     right: 10px;
     top: 10px;
 }
 
-.deleteTask svg {
+.deleteTask svg, .drag-handle svg {
     fill: var(--text2);
 }
 
-.deleteTask:hover svg {
-    cursor: pointer;
+.deleteTask:hover svg, .drag-handle:hover svg {
     fill: var(--text);
     transform: scale(105%);
+}
+
+.deleteTask:hover {
+    cursor: pointer;
+}
+
+.drag-handle {
+    opacity: 0.5;
+    cursor: grab;
+    transition: opacity 500ms;
+}
+
+.drag-handle:active {
+    opacity: 1;
+    cursor: grabbing;
+}
+
+.task.dragging {
+    opacity: 0.5;
 }

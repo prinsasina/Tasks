@@ -1,4 +1,5 @@
 let tasks = [];
+let draggedTask = null;
 const submitTask = document.querySelector('form');
 const inputTask = document.getElementById('newTask');
 const taskList = document.getElementById('taskList');
@@ -45,7 +46,9 @@ function changeTheme() {
 function currentTask() {
     taskList.innerHTML = "";
     for (let i=0; i<tasks.length; i++) {
-        taskList.append(createTask(tasks[i],i));
+        const task = createTask(tasks[i],i);
+        task.setAttribute("data-index", i);
+        taskList.append(task);
     }
     updateContentStyles();
 }
@@ -82,7 +85,29 @@ function createTask(task, index) {
                 <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/>
             </svg>
         </button>
+        <button class="drag-handle">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+                <path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/>
+            </svg>
+        </button>
     `;
+
+    const dragHandle = taskLi.querySelector(".drag-handle");
+    dragHandle.addEventListener("mousedown", () => {
+        taskLi.draggable = true;
+    });
+    dragHandle.addEventListener("mouseup", () => {
+        taskLi.draggable = false;
+    });
+
+    taskLi.addEventListener("dragstart", function(e) {
+        draggedTask = taskLi;
+        setTimeout(taskLi.classList.add("dragging"), 0);
+        e.dataTransfer.setData("text/plain", index);
+    })
+    taskLi.addEventListener("dragend", function() {
+        taskLi.classList.remove("dragging");
+    })
 
     const checkbox = taskLi.querySelector("input[type='checkbox']");
     checkbox.addEventListener('change', function() {
@@ -116,3 +141,33 @@ function updateContentStyles() {
         content.classList.remove('with-tasks');
     }
 }
+
+taskList.addEventListener("dragover", function(e) {
+    e.preventDefault();
+    const selected = document.querySelector(".dragging");
+    const notthistask = [...taskList.querySelectorAll(".task:not(.dragging")];
+    const nexttask = notthistask.find(task => {
+        return e.clientY <= task.offsetTop + task.offsetHeight/2;
+    });
+    if (nexttask) {
+        taskList.insertBefore(selected, nexttask);
+    } else {
+        taskList.appendChild(selected);
+    }
+});
+
+taskList.addEventListener("drop", function(e) {
+    e.preventDefault();
+    const items = [...taskList.children];
+    const newIndex = items.indexOf(draggedTask);
+    const oldIndex = parseInt(draggedTask.dataset.index);
+    if (oldIndex!=newIndex) {
+        const [movedTask] = tasks.splice(oldIndex, 1);
+        tasks.splice(newIndex, 0, movedTask);
+        saveTasks();
+        currentTask();
+    }
+
+    draggedTask = null;
+})
+
