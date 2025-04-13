@@ -1,5 +1,7 @@
 let tasks = [];
 let draggedTask = null;
+let recentlyDelete = null;
+let timeout = null;
 const submitTask = document.querySelector('form');
 const inputTask = document.getElementById('newTask');
 const taskList = document.getElementById('taskList');
@@ -125,10 +127,41 @@ function createTask(task, index) {
 }
 
 function deleteTask(index) {
+    recentlyDelete = {task: tasks[index], index: index};
     tasks.splice(index, 1);
     saveTasks();
     currentTask();
+    showNotification();
 }
+
+const notification = document.getElementById("notification");
+const closeButton = document.getElementById("close-button");
+
+function showNotification() {
+    notification.classList.add("show");
+
+    timeout = setTimeout(function() {
+        notification.classList.remove("show");
+        recentlyDelete = null;
+    }, 5000);
+}
+
+document.getElementById("undo-button").addEventListener("click", function() {
+    if (recentlyDelete){
+        tasks.splice(recentlyDelete.index, 0, recentlyDelete.task);
+        saveTasks();
+        currentTask();
+        notification.classList.remove("show");
+        clearTimeout(timeout);
+        recentlyDelete = null;
+    }
+})
+
+closeButton.addEventListener("click", function() {
+    notification.classList.remove("show");
+    clearTimeout(timeout);
+    recentlyDelete = null;
+});
 
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -169,5 +202,9 @@ taskList.addEventListener("drop", function(e) {
     }
 
     draggedTask = null;
+});
+
+closeButton.addEventListener("click", function() {
+    notification.classList.remove("show");
 })
 
