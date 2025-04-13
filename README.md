@@ -5,6 +5,7 @@
 ![Demo Screenshot](/image/dark-mode.png)  
 
 ## Features  
-- Add/Complete/Delete tasks  
+- Add/Complete/Delete task
 - Theme toggle
+- Drag/Drop task
 - **Live Demo**: [Try it here!](prinsasina.github.io/Tasks/)  
