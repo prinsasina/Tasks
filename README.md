@@ -8,4 +8,5 @@
 - Add/Complete/Delete task
 - Theme toggle
 - Drag/Drop task
+- Undo deletion
 - **Live Demo**: [Try it here!](prinsasina.github.io/Tasks/)  
